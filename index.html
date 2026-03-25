@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Pro - Ultimate Edition</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body class="theme-glass">
+    <div id="app">
+        <div id="intro-screen" class="screen active">
+            <div class="glass-panel">
+                <h1 class="logo-text">LUDO<span>PRO</span></h1>
+                <div class="menu-actions">
+                    <button onclick="showScreen('setup-screen', 'offline')" class="btn-main">Local Multiplayer</button>
+                    <button onclick="showScreen('setup-screen', 'ai')" class="btn-main secondary">Practice vs AI</button>
+                    <button onclick="showScreen('online-screen')" class="btn-main accent">Play Online</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="setup-screen" class="screen">
+            <div class="glass-panel">
+                <h2>Select Players</h2>
+                <div class="player-grid">
+                    <button onclick="startGame(2)" class="player-opt">2 Players</button>
+                    <button onclick="startGame(3)" class="player-opt">3 Players</button>
+                    <button onclick="startGame(4)" class="player-opt">4 Players</button>
+                </div>
+                <button onclick="showScreen('intro-screen')" class="btn-back">Main Menu</button>
+            </div>
+        </div>
+
+        <div id="online-screen" class="screen">
+            <div class="glass-panel">
+                <h2>Online Matchmaking</h2>
+                <div class="online-box">
+                    <input type="text" id="room-code" placeholder="Enter Room Code">
+                    <button onclick="joinRoom()" class="btn-main">Join Room</button>
+                    <div class="divider">OR</div>
+                    <button onclick="createRoom()" class="btn-main accent">Create Private Room</button>
+                </div>
+                <button onclick="showScreen('intro-screen')" class="btn-back">Back</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div class="game-layout">
+                <div id="ludo-board" class="ludo-board">
+                    <div id="token-layer" class="token-layer"></div>
+                </div>
+                <div class="game-side">
+                    <div class="status-panel glass">
+                        <div id="current-player" class="player-badge">RED'S TURN</div>
+                        <div class="dice-area">
+                            <div id="dice" class="dice" onclick="rollAction()">?</div>
+                        </div>
+                        <div id="game-msg" class="msg-box">Roll the dice to start!</div>
+                    </div>
+                    <div class="game-log glass" id="game-log"></div>
+                    <button onclick="quitGame()" class="btn-quit">Quit Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="ludo-engine.js"></script>
+    <script src="ai-bot.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
