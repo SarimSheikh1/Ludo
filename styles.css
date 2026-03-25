@@ -1,0 +1,70 @@
+:root {
+    --bg: #0b0e14;
+    --red: #ff4757;
+    --green: #2ed573;
+    --yellow: #ffa502;
+    --blue: #1e90ff;
+    --glass: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --sh: 0 10px 40px rgba(0,0,0,0.5);
+    --font: 'Outfit', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font); }
+body { background: var(--bg); color: #fff; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+
+#app { width: 100%; height: 100%; position: relative; }
+.screen { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+.screen.active { display: flex; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.glass-panel { background: var(--glass); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 24px; padding: 40px; text-align: center; box-shadow: var(--sh); max-width: 500px; width: 90%; }
+.logo-text { font-size: 4rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 30px; }
+.logo-text span { color: var(--blue); }
+
+.btn-main { width: 100%; padding: 18px; margin: 10px 0; border: none; border-radius: 14px; font-size: 1.2rem; font-weight: 600; cursor: pointer; transition: 0.3s; background: #fff; color: #000; }
+.btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
+.btn-main.secondary { background: var(--glass); color: #fff; border: 1px solid var(--border); }
+.btn-main.accent { background: linear-gradient(45deg, var(--blue), #8e44ad); color: #fff; }
+
+.ludo-board { 
+    width: min(85vw, 600px); height: min(85vw, 600px); 
+    display: grid; grid-template-columns: repeat(15, 1fr); grid-template-rows: repeat(15, 1fr); 
+    background: #fff; border: 10px solid #222; border-radius: 12px; box-shadow: var(--sh); position: relative; 
+}
+.cell { border: 0.5px solid rgba(0,0,0,0.05); }
+
+.token-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+.token { 
+    width: min(4vw, 32px); height: min(4vw, 32px); border-radius: 50%; border: 3px solid #fff; 
+    position: absolute; pointer-events: auto; cursor: pointer; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: translate(-50%, -50%); z-index: 100;
+}
+.token.red { background: radial-gradient(circle at 30% 30%, #ff6b81, #ff4757); }
+.token.green { background: radial-gradient(circle at 30% 30%, #7bed9f, #2ed573); }
+.token.yellow { background: radial-gradient(circle at 30% 30%, #eccc68, #ffa502); }
+.token.blue { background: radial-gradient(circle at 30% 30%, #70a1ff, #1e90ff); }
+.token.active-move { animation: pulse 0.8s infinite alternate; }
+@keyframes pulse { from { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0px var(--blue); } to { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 20px var(--blue); } }
+
+.game-layout { display: flex; gap: 30px; align-items: flex-start; }
+.game-side { width: 300px; display: flex; flex-direction: column; gap: 20px; }
+.glass { background: var(--glass); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+.player-badge { font-size: 1.5rem; font-weight: 800; text-align: center; margin-bottom: 20px; padding: 10px; border-radius: 10px; }
+
+.dice-area { display: flex; justify-content: center; padding: 20px; }
+.dice { 
+    width: 80px; height: 80px; background: #fff; color: #000; border-radius: 16px; 
+    font-size: 2.5rem; font-weight: 800; display: flex; justify-content: center; align-items: center; 
+    cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: 0.2s; 
+}
+.dice.rolling { animation: shake 0.4s infinite; }
+@keyframes shake { 0% { transform: rotate(0); } 25% { transform: rotate(10deg); } 50% { transform: rotate(-50deg); } 75% { transform: rotate(5deg); } 100% { transform: rotate(0); } }
+
+.game-log { height: 200px; overflow-y: auto; font-size: 0.9rem; opacity: 0.7; }
+.btn-quit { padding: 12px; background: var(--red); color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; }
+
+@media (max-width: 1000px) {
+    .game-layout { flex-direction: column; align-items: center; }
+    .game-side { width: 100%; }
+}
